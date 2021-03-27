@@ -1,5 +1,5 @@
 const express = require('express');
-const DBuri = "mongodb+srv://maddy:maddy1234@cluster0.gdw0x.mongodb.net/barter?retryWrites=true&w=majority";
+//const DBuri = "mongodb+srv://maddy:{passwod}@cluster0.gdw0x.mongodb.net/barter?retryWrites=true&w=majority";
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
