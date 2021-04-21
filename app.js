@@ -1,9 +1,12 @@
 const express = require('express');
-//const DBuri = "mongodb+srv://maddy:{passwod}@cluster0.gdw0x.mongodb.net/barter?retryWrites=true&w=majority";
+const cors = require('cors');
+const DBuri = "mongodb+srv://maddy:maddy1234@cluster0.gdw0x.mongodb.net/barter?retryWrites=true&w=majority";
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
 const bookmarkRoutes = require('./routes/bookmarkRoutes');
+const myRequestRoutes = require('./routes/myRequestRoutes');
+
 
 
 const app = express();
@@ -22,10 +25,19 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
+app.use(cors());
+
 
 app.get('/',(req,res) => {
     res.send("hello");
 })
+
+//-----------------------------
+
+  
+
+//-----------------------------
+
 //user routes
 app.use(userRoutes);
 
@@ -34,3 +46,6 @@ app.use(productRoutes);
 
 //bookmark routes
 app.use(bookmarkRoutes);
+
+//request routes
+app.use(myRequestRoutes);

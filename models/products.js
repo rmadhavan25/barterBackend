@@ -45,6 +45,10 @@ const productSchema = new schema({
     requested:{
         type:Boolean,
         required:true
+    },
+    requestedExchange:{
+        type:Array,
+        required:false
     }
 },{timestamps:true});
 

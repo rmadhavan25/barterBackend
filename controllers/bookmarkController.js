@@ -16,33 +16,42 @@ const add_bookmark = (req,res) => {
 };
 
 const get_bookmarks = (req,res) => {
-    const query = {
-        userPhoneNumber: req.query.userPhoneNumber,
-    };
-
-    Bookmark.find(query,(err,result) => {
-        if(err)
-            console.log(err);
+    jwt.verify(req.token, 'secretkey', (err, authData) => {
+        if(err) {
+          res.sendStatus(403);
+        }
         else{
-            if(result!=null)
-                res.status(200).json(result);
-            else
-                res.status(204).send("No Bookmarks yet!");
+            const query = {
+                //since the data is passed as a parameter...req.query is used to access the value
+                productOwnerPhone:authData.user.userPhone
+            }
+            Product.find(query,(err,result) => {
+                if(result!=null){
+                    console.log("myBookmarks sent");
+                    res.status(200).json(result);
+                }
+                else if(result == null){
+                    console.log("No Bookmarks to list");
+                    res.status(204).send("No Bookmarks to list. Add Bookmarks to view.");
+                }
+                else{
+                    console.log(err);
+                }
+            })
         }
     });
 };
 
 const delete_bookmark = (req,res) => {
-    const _id = new ObjectID(req.body._id);
+    const query = {bookmarkedProductId:req.body.bookmarkedProductId};
 
-    Bookmark.findOneAndDelete({_id:_id},(err,result) => {
+    Bookmark.deleteOne(query,(err,result) => {
         if(err)
             console.log(err);
         else{
             console.log(result);
             res.status(200).send("OK");
         }
-            
     });
 };
 
